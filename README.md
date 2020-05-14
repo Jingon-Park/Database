@@ -1,69 +1,69 @@
-# Database
-데이터베이스설계 LAMP환경 구축
-주요 IP는 #으로 처리.
-AWS EC2사용, Mysql, PHP, HTML
-MySQL 생성 
-CREATE TABLE Employee
-(
-    `Employee_ID`    VARCHAR(45)    NOT NULL, 
-    `Employee_Name`  VARCHAR(45)    NULL, 
-    `Position`       VARCHAR(45)    NULL, 
-    `Phone`          VARCHAR(45)    NULL, 
-    `Address`        VARCHAR(45)    NULL, 
-    `Department`     VARCHAR(45)    NULL, 
-    `Boss_ID`        VARCHAR(45)    NULL, 
-    PRIMARY KEY (Employee_ID)
-);
-ALTER TABLE Employee
-    ADD CONSTRAINT FK_Employee_Boss_ID_Employee_Employee_ID FOREIGN KEY (Boss_ID)
-        REFERENCES Employee (Employee_ID) ON DELETE RESTRICT ON UPDATE RESTRICT;
-        
-CREATE TABLE Cell
-(
-    `Cell_Num`      VARCHAR(45)    NOT NULL, 
-    `Cell_Maneger`  VARCHAR(45)    NULL, 
-    PRIMARY KEY (Cell_Num)
-);
+# Database     
+데이터베이스설계 LAMP환경 구축     
+주요 IP는 #으로 처리.    
+AWS EC2사용, Mysql, PHP, HTML    
+MySQL 생성     
+CREATE TABLE Employee    
+(    
+    `Employee_ID`    VARCHAR(45)    NOT NULL,     
+    `Employee_Name`  VARCHAR(45)    NULL,     
+    `Position`       VARCHAR(45)    NULL,     
+    `Phone`          VARCHAR(45)    NULL,    
+    `Address`        VARCHAR(45)    NULL,     
+    `Department`     VARCHAR(45)    NULL,    
+    `Boss_ID`        VARCHAR(45)    NULL,   
+    PRIMARY KEY (Employee_ID)  
+);   
+ALTER TABLE Employee    
+    ADD CONSTRAINT FK_Employee_Boss_ID_Employee_Employee_ID FOREIGN KEY (Boss_ID)  
+        REFERENCES Employee (Employee_ID) ON DELETE RESTRICT ON UPDATE RESTRICT;    
+             
+CREATE TABLE Cell      
+(   
+    `Cell_Num`      VARCHAR(45)    NOT NULL,    
+    `Cell_Maneger`  VARCHAR(45)    NULL,      
+    PRIMARY KEY (Cell_Num)   
+);   
+   
+ALTER TABLE Cell     
+    ADD CONSTRAINT FK_Cell_Cell_Maneger_Employee_Employee_ID FOREIGN KEY (Cell_Maneger)   
+        REFERENCES Employee (Employee_ID) ON DELETE RESTRICT ON UPDATE RESTRICT;     
+CREATE TABLE Prisoner   
+(       
+    `Prisoner_Num`   VARCHAR(45)    NOT NULL,     
+    `Prisoner_Name`  VARCHAR(45)    NULL,     
+    `Entrance_Date`  VARCHAR(45)    NULL,     
+    `Crime_Type`     VARCHAR(45)    NULL,   
+    `Cell_Num`       VARCHAR(45)    NULL,    
+    `Exit_Date`      VARCHAR(45)    NULL,     
+    `Crime_Level`    VARCHAR(45)    NULL,     
+    PRIMARY KEY (Prisoner_Num)   
+);    
+       
+ALTER TABLE Prisoner  
+    ADD CONSTRAINT FK_Prisoner_Cell_Num_Cell_Cell_Num FOREIGN KEY (Cell_Num)     
+        REFERENCES Cell (Cell_Num) ON DELETE RESTRICT ON UPDATE RESTRICT;    
+            
+CREATE TABLE Program   
+(    
+    `Program_Num`      VARCHAR(45)    NOT NULL,    
+    `Program_Name`     VARCHAR(45)    NULL,     
+    `Program_Manager`  VARCHAR(45)    NULL,   
+    PRIMARY KEY (Program_Num)    
+);  
 
-ALTER TABLE Cell
-    ADD CONSTRAINT FK_Cell_Cell_Maneger_Employee_Employee_ID FOREIGN KEY (Cell_Maneger)
-        REFERENCES Employee (Employee_ID) ON DELETE RESTRICT ON UPDATE RESTRICT;
-CREATE TABLE Prisoner
-(
-    `Prisoner_Num`   VARCHAR(45)    NOT NULL, 
-    `Prisoner_Name`  VARCHAR(45)    NULL, 
-    `Entrance_Date`  VARCHAR(45)    NULL, 
-    `Crime_Type`     VARCHAR(45)    NULL, 
-    `Cell_Num`       VARCHAR(45)    NULL, 
-    `Exit_Date`      VARCHAR(45)    NULL, 
-    `Crime_Level`    VARCHAR(45)    NULL, 
-    PRIMARY KEY (Prisoner_Num)
-);
-
-ALTER TABLE Prisoner
-    ADD CONSTRAINT FK_Prisoner_Cell_Num_Cell_Cell_Num FOREIGN KEY (Cell_Num)
-        REFERENCES Cell (Cell_Num) ON DELETE RESTRICT ON UPDATE RESTRICT;
-        
-CREATE TABLE Program
-(
-    `Program_Num`      VARCHAR(45)    NOT NULL, 
-    `Program_Name`     VARCHAR(45)    NULL, 
-    `Program_Manager`  VARCHAR(45)    NULL, 
-    PRIMARY KEY (Program_Num)
-);
-
-ALTER TABLE Program
-    ADD CONSTRAINT FK_Program_Program_Manager_Employee_Employee_ID FOREIGN KEY (Program_Manager)
-        REFERENCES Employee (Employee_ID) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-CREATE TABLE Account
-(
-    `Accout_Num`    VARCHAR(45)    NOT NULL, 
-    `Prisoner_Num`  VARCHAR(45)    NOT NULL, 
-    `Amount`        VARCHAR(45)    NULL, 
-    PRIMARY KEY (Accout_Num)
-);
-
+ALTER TABLE Program    
+    ADD CONSTRAINT FK_Program_Program_Manager_Employee_Employee_ID FOREIGN KEY (Program_Manager)    
+        REFERENCES Employee (Employee_ID) ON DELETE RESTRICT ON UPDATE RESTRICT;    
+   
+CREATE TABLE Account   
+(    
+    `Accout_Num`    VARCHAR(45)    NOT NULL,     
+    `Prisoner_Num`  VARCHAR(45)    NOT NULL,     
+    `Amount`        VARCHAR(45)    NULL,      
+    PRIMARY KEY (Accout_Num)    
+);       
+    
 ALTER TABLE Account
     ADD CONSTRAINT FK_Account_Prisoner_Num_Prisoner_Prisoner_Num FOREIGN KEY (Prisoner_Num)
         REFERENCES Prisoner (Prisoner_Num) ON DELETE RESTRICT ON UPDATE RESTRICT;
