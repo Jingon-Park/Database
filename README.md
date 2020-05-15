@@ -1,6 +1,6 @@
 # Database     
 데이터베이스설계 LAMP환경 구축     
-주요 IP는 #으로 처리.    
+주요 IP는 localhost로 처리.    
 AWS EC2사용, Mysql, PHP, HTML    
 MySQL 생성     
 CREATE TABLE Employee    
